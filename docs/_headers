@@ -1,0 +1,12 @@
+/api/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+  Access-Control-Allow-Headers: Content-Type
+
+/data/csv/*
+  Access-Control-Allow-Origin: *
+  Content-Type: text/csv
+
+/data/json/*
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json 

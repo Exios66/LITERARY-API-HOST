@@ -1,5 +1,5 @@
 title: Literary Vault API
-description: Question database API for AI agents
+description: API for retrieving quiz questions across various subjects
 baseurl: "/LITERARY-API-HOST"
 url: "https://exios66.github.io"
 markdown: kramdown
@@ -17,4 +17,19 @@ enable_cors: true
 # Collections
 collections:
   questions:
-    output: true 
+    output: true
+
+# Custom headers for API
+include:
+  - _headers
+
+# Configure paths
+defaults:
+  - scope:
+      path: "docs/data/csv"
+    values:
+      raw: true
+  - scope:
+      path: "docs/api/v1"
+    values:
+      layout: "null"

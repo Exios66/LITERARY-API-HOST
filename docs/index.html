@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literary Vault - Question Categories</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1d4ed8;
+            --text-color: #1f2937;
+            --background-color: #ffffff;
+            --code-bg: #f3f4f6;
+            --code-text: #1f2937;
+            --border-color: #e5e7eb;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #3b82f6;
+            --secondary-color: #2563eb;
+            --text-color: #f9fafb;
+            --background-color: #111827;
+            --code-bg: #1f2937;
+            --code-text: #f9fafb;
+            --border-color: #374151;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            margin: 0.5rem 0;
+        }
+
+        ul li a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        ul li a:hover {
+            text-decoration: underline;
+        }
+
+        pre {
+            position: relative;
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        code {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.75rem;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 10000;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .copy-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .copy-button svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Literary Vault Question Repository</h1>
+        <p>Access questions by category for API integration.</p>
+
+        <h2>Categories</h2>
+        <ul>
+            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Astronomy_Questions.csv">Astronomy</a></li>
+            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Literature_Questions.csv">Literature</a></li>
+            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Mathematics_Questions.csv">Mathematics</a></li>
+            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_General_Knowledge_Questions.csv">General Knowledge</a></li>
+            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Psychology_Questions.csv">Psychology</a></li>
+            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_American_History_Questions.csv">American History</a></li>
+        </ul>
+
+        <h2>API Access</h2>
+        <p>Use the following curl commands to access the CSV files:</p>
+        <pre>
+<button type="button" class="copy-button" onclick="copyToClipboard(this)">
+    <svg viewBox="0 0 24 24">
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+    </svg>
+    Copy
+</button>
+curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Astronomy_Questions.csv" -o "Astronomy_Questions.csv"
+curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Literature_Questions.csv" -o "Literature_Questions.csv"
+curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Mathematics_Questions.csv" -o "Mathematics_Questions.csv"
+curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_General_Knowledge_Questions.csv" -o "General_Knowledge_Questions.csv"
+curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Psychology_Questions.csv" -o "Psychology_Questions.csv"
+curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_American_History_Questions.csv" -o "American_History_Questions.csv"
+        </pre>
+
+        <h2>Action JSON Framework</h2>
+        <pre>
+<button type="button" class="copy-button" onclick="copyToClipboard(this)">
+    <svg viewBox="0 0 24 24">
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+    </svg>
+    Copy
+</button>
+{
+  "name": "get_questions",
+  "description": "Retrieves questions from the CSV files in the Literary Vault repository",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "category": {
+        "type": "string",
+        "description": "The category of questions to retrieve",
+        "enum": ["astronomy", "literature", "mathematics", "general-knowledge", "psychology", "american-history"]
+      },
+      "limit": {
+        "type": "integer",
+        "description": "Maximum number of questions to return",
+        "default": 10,
+        "minimum": 1,
+        "maximum": 50
+      },
+      "random": {
+        "type": "boolean",
+        "description": "Whether to return random questions or sequential ones",
+        "default": true
+      }
+    },
+    "required": ["category"]
+  },
+  "returns": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the question"
+        },
+        "question": {
+          "type": "string",
+          "description": "The question text"
+        },
+        "options": {
+          "type": "array",
+          "description": "Multiple choice options if applicable",
+          "items": {
+            "type": "string"
+          }
+        },
+        "correct_answer": {
+          "type": "string",
+          "description": "The correct answer to the question"
+        }
+      },
+      "required": ["id", "question", "correct_answer"]
+    }
+  }
+}
+        </pre>
+    </div>
+
+    <button class="theme-toggle" type="button" onclick="toggleTheme()">🌓</button>
+
+    <div class="toast" role="alert" aria-live="polite"></div>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? '' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Set initial theme based on localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+
+        // Toast notification handling
+        const toastElement = document.querySelector('.toast');
+        let toastTimeout;
+
+        const toast = {
+            show(message, duration = 3000) {
+                toastElement.textContent = message;
+                toastElement.classList.add('show');
+
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toastElement.classList.remove('show');
+                }, duration);
+            }
+        };
+
+        // Copy to clipboard functionality
+        function copyToClipboard(button) {
+            const pre = button.parentElement;
+            const codeText = pre.textContent.replace('Copy', '').trim();
+            navigator.clipboard.writeText(codeText).then(() => {
+                toast.show('Copied to clipboard');
+            });
+        }
+    </script>
+</body>
+</html>

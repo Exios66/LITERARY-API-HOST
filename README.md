@@ -1,9 +1,11 @@
 # README
 
-```markdown
 # 📚 LITERARY-API-HOST
 
-![License](https://img.shields.io/github/license/Exios66/LITERARY-API-HOST?style=for-the-badge)
+![MIT License](https://img.shields.io/github/license/Exios66/LITERARY-API-HOST?style=for-the-badge)
+![Python Version](https://img.shields.io/badge/python-3.9%2B-blue?style=for-the-badge)
+![OpenAI](https://img.shields.io/badge/OpenAI-powered-blueviolet?style=for-the-badge)
+![Commits](https://img.shields.io/github/commit-activity/m/Exios66/LITERARY-API-HOST?style=for-the-badge)
 ![Issues](https://img.shields.io/github/issues/Exios66/LITERARY-API-HOST?style=for-the-badge)
 ![Pull Requests](https://img.shields.io/github/issues-pr/Exios66/LITERARY-API-HOST?style=for-the-badge)
 ![Stars](https://img.shields.io/github/stars/Exios66/LITERARY-API-HOST?style=for-the-badge)

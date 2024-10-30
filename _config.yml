@@ -1,0 +1,20 @@
+title: Literary Vault API
+description: Question database API for AI agents
+baseurl: "/LITERARY-API-HOST"
+url: "https://exios66.github.io"
+markdown: kramdown
+theme: jekyll-theme-minimal
+
+# Build settings
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# API Settings
+api_version: "v1"
+enable_cors: true
+
+# Collections
+collections:
+  questions:
+    output: true 

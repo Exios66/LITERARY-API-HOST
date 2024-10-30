@@ -6,23 +6,45 @@
     <title>Literary Vault - Question Categories</title>
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1d4ed8;
-            --text-color: #1f2937;
-            --background-color: #ffffff;
-            --code-bg: #f3f4f6;
-            --code-text: #1f2937;
-            --border-color: #e5e7eb;
+            /* Light theme - Vaporwave inspired */
+            --primary-color: #ff71ce;
+            --secondary-color: #b967ff; 
+            --text-color: #1f1f1f;
+            --background-color: #fffcff;
+            --code-bg: #f0e6ff;
+            --code-text: #2d1b4a;
+            --border-color: #e5d9ff;
+            --accent-1: #01cdfe;
+            --accent-2: #05ffa1;
+            --accent-3: #fffb96;
         }
 
         [data-theme="dark"] {
-            --primary-color: #3b82f6;
-            --secondary-color: #2563eb;
-            --text-color: #f9fafb;
-            --background-color: #111827;
-            --code-bg: #1f2937;
-            --code-text: #f9fafb;
-            --border-color: #374151;
+            /* Dark theme - Cyberpunk inspired */
+            --primary-color: #00fff5;
+            --secondary-color: #ff00ff;
+            --text-color: #ffffff;
+            --background-color: #0d0221;
+            --code-bg: #1a0b2e;
+            --code-text: #00fff5;
+            --border-color: #31087B;
+            --accent-1: #ff00ff;
+            --accent-2: #fc28fc;
+            --accent-3: #bf0fff;
+        }
+
+        [data-theme="high-contrast"] {
+            /* High contrast theme */
+            --primary-color: #00ff00;
+            --secondary-color: #ffff00;
+            --text-color: #ffffff;
+            --background-color: #000000;
+            --code-bg: #1a1a1a;
+            --code-text: #00ff00;
+            --border-color: #ffffff;
+            --accent-1: #ff0000;
+            --accent-2: #00ffff;
+            --accent-3: #ff00ff;
         }
 
         body {
@@ -32,6 +54,7 @@
             padding: 0;
             background-color: var(--background-color);
             color: var(--text-color);
+            transition: all 0.3s ease;
         }
 
         .container {
@@ -42,6 +65,7 @@
 
         h1, h2, h3 {
             color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         ul {
@@ -56,10 +80,13 @@
         ul li a {
             color: var(--primary-color);
             text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         ul li a:hover {
-            text-decoration: underline;
+            color: var(--secondary-color);
+            text-decoration: none;
+            text-shadow: 0 0 8px var(--accent-1);
         }
 
         pre {
@@ -70,6 +97,8 @@
             border-radius: 0.5rem;
             overflow-x: auto;
             margin: 1rem 0;
+            border: 1px solid var(--accent-1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         code {
@@ -87,9 +116,16 @@
             padding: 0.75rem;
             border-radius: 50%;
             background: var(--primary-color);
-            color: white;
-            border: none;
+            color: var(--background-color);
+            border: 2px solid var(--accent-1);
             cursor: pointer;
+            box-shadow: 0 0 15px var(--accent-1);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--accent-2);
         }
 
         .toast {
@@ -98,7 +134,7 @@
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.8);
-            color: white;
+            color: var(--accent-2);
             padding: 0.5rem 1rem;
             border-radius: 4px;
             font-size: 0.9rem;
@@ -106,6 +142,7 @@
             transition: opacity 0.3s ease;
             pointer-events: none;
             z-index: 10000;
+            border: 1px solid var(--accent-1);
         }
 
         .toast.show {
@@ -117,7 +154,7 @@
             top: 0.5rem;
             right: 0.5rem;
             background: var(--primary-color);
-            color: white;
+            color: var(--background-color);
             border: none;
             padding: 0.25rem 0.5rem;
             border-radius: 3px;
@@ -126,11 +163,12 @@
             display: flex;
             align-items: center;
             gap: 0.25rem;
-            transition: background-color 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         .copy-button:hover {
             background-color: var(--secondary-color);
+            transform: scale(1.05);
         }
 
         .copy-button svg {
@@ -143,6 +181,7 @@
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
+            border: 1px solid var(--border-color);
         }
 
         th, td {
@@ -153,7 +192,25 @@
 
         th {
             background-color: var(--code-bg);
-            color: var(--code-text);
+            color: var(--primary-color);
+        }
+
+        .container ul ul {
+            margin-left: 2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .container ul ul li {
+            margin: 0.25rem 0;
+            position: relative;
+        }
+
+        .container ul ul li::before {
+            content: "→";
+            position: absolute;
+            left: -1.2rem;
+            color: var(--secondary-color);
         }
     </style>
 </head>
@@ -181,12 +238,12 @@
     </svg>
     Copy
 </button>
-curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Astronomy_questions.md" -o "Astronomy_Questions.csv"
-curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Literature_questions.md" -o "Literature_Questions.csv"
-curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Refined_Mathematics_questions.md" -o "Mathematics_Questions.csv"
-curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/General-Knowledge-questions.md" -o "General_Knowledge_Questions.csv"
-curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Psychology-questions.md" -o "Psychology_Questions.csv"
-curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/American-History-questions.md" -o "American_History_Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Astronomy-questions.csv" -o "Astronomy-Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Literature-questions.csv" -o "Literature-Questions.csv" 
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Mathematics-questions.csv" -o "Mathematics-Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/General-Knowledge-questions.csv" -o "General-Knowledge-Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Psychology-questions.csv" -o "Psychology-Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/American-History-questions.csv" -o "American-History-Questions.csv"
         </pre>
 
         <h2>Sample Questions</h2>
@@ -267,12 +324,12 @@ curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/American-Hist
   "name": "get_questions",
   "description": "Retrieves questions from the CSV files in the Literary Vault repository",
   "parameters": {
-    "type": "object",
+    "type": "object", 
     "properties": {
       "category": {
         "type": "string",
         "description": "The category of questions to retrieve",
-        "enum": ["astronomy", "literature", "mathematics", "general-knowledge", "psychology", "american-history"]
+        "enum": ["Astronomy", "Literature", "Mathematics"]
       },
       "limit": {
         "type": "integer",
@@ -280,6 +337,18 @@ curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/American-Hist
         "default": 10,
         "minimum": 1,
         "maximum": 50
+      },
+      "difficulty": {
+        "type": "integer",
+        "description": "Difficulty level of questions (0-3)",
+        "minimum": 0,
+        "maximum": 3,
+        "default": null
+      },
+      "topic": {
+        "type": "string",
+        "description": "Specific topic focus to filter by",
+        "default": null
       },
       "random": {
         "type": "boolean",
@@ -299,38 +368,62 @@ curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/American-Hist
           "description": "Unique identifier for the question"
         },
         "question": {
-          "type": "string",
+          "type": "string", 
           "description": "The question text"
-        },
-        "options": {
-          "type": "array",
-          "description": "Multiple choice options if applicable",
-          "items": {
-            "type": "string"
-          }
         },
         "correct_answer": {
           "type": "string",
-          "description": "The correct answer to the question"
+          "description": "The correct answer"
+        },
+        "choices": {
+          "type": "array",
+          "description": "Array of multiple choice options",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3,
+          "maxItems": 3
         },
         "difficulty": {
           "type": "integer",
-          "description": "Difficulty level of the question"
+          "description": "Difficulty level (0-3)"
         },
         "knowledge_category": {
           "type": "string",
-          "description": "The main category of knowledge"
+          "description": "Main category (Astronomy, Literature, Mathematics)"
         },
         "topic_focus": {
           "type": "string",
-          "description": "Specific topic focus within the category"
+          "description": "Specific topic within the category"
         }
       },
-      "required": ["id", "question", "correct_answer"]
+      "required": ["id", "question", "correct_answer", "choices", "difficulty", "knowledge_category", "topic_focus"]
     }
   }
 }
         </pre>
+
+        <h2>API Documentation & Sitemap</h2>
+        <ul>
+            <li><a href="docs/api.md">API Reference Documentation</a></li>
+            <li><a href="docs/data/index.md">Question Categories Index</a></li>
+            <li>Question Categories:
+                <ul>
+                    <li><a href="docs/data/Astronomy-questions.md">Astronomy Questions</a></li>
+                    <li><a href="docs/data/Literature-questions.md">Literature Questions</a></li>
+                    <li><a href="docs/data/Mathematics-questions.md">Mathematics Questions</a></li>
+                    <li><a href="docs/data/General-Knowledge-questions.md">General Knowledge Questions</a></li>
+                    <li><a href="docs/data/Psychology-questions.md">Psychology Questions</a></li>
+                    <li><a href="docs/data/American-History-questions.md">American History Questions</a></li>
+                </ul>
+            </li>
+            <li>Data Formats:
+                <ul>
+                    <li>CSV Files: <code>/{category}-questions.csv</code></li>
+                    <li>JSON Files: <code>/{category}-questions.json</code></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 
     <button class="theme-toggle" type="button" onclick="toggleTheme()">🌓</button>

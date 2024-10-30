@@ -1,65 +1,48 @@
-import { parse } from 'csv-parse/sync';
-import { readFileSync } from 'fs';
+import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-export class QuestionDataLoader {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DATA_DIR = path.join(__dirname, '../../data');
+
+export class DataLoader {
     constructor() {
+        this.categories = [
+            'Astronomy',
+            'Literature',
+            'Mathematics',
+            'General-Knowledge',
+            'Psychology',
+            'American-History'
+        ];
         this.cache = new Map();
-        this.dataDir = path.join(process.cwd(), 'docs/data');
     }
 
-    loadQuestions(category) {
-        // Check cache first
-        if (this.cache.has(category)) {
-            return this.cache.get(category);
+    async loadQuestions(category) {
+        if (!this.categories.includes(category)) {
+            throw new Error(`Invalid category: ${category}`);
         }
 
+        const cacheKey = `${category}-questions`;
+        if (this.cache.has(cacheKey)) {
+            return this.cache.get(cacheKey);
+        }
+
+        const filePath = path.join(DATA_DIR, `${category}-questions.csv`);
         try {
-            // Load and parse CSV file
-            const filePath = path.join(this.dataDir, `${category}-questions.csv`);
-            const fileContent = readFileSync(filePath, 'utf-8');
-            const records = parse(fileContent, {
-                columns: true,
-                skip_empty_lines: true
-            });
-
-            // Transform to QuizEngine compatible format
-            const questions = records.map((record, index) => {
-                // Destructure the choices to match the DataFrame format
-                const [choice1, choice2, choice3] = this.shuffleChoices([
-                    record['Choice 1'],
-                    record['Choice 2'],
-                    record['Choice 3']
-                ]);
-
-                return {
-                    id: record.ID || `${category}-${index + 1}`,
-                    question: record.Question,
-                    correct_answer: record['Correct Answer'],
-                    choice_1: choice1,
-                    choice_2: choice2,
-                    choice_3: choice3,
-                    difficulty: parseInt(record.Difficulty),
-                    knowledge_category: record['Knowledge Category'],
-                    topic_focus: record['Topic Focus']
-                };
-            });
-
-            // Cache the results
-            this.cache.set(category, questions);
-            return questions;
-
+            const data = await fs.promises.readFile(filePath, 'utf8');
+            this.cache.set(cacheKey, data);
+            return data;
         } catch (error) {
-            console.error(`Error loading questions for ${category}:`, error);
-            return [];
+            console.error(`Error loading ${category} questions:`, error);
+            throw new Error(`Failed to load ${category} questions`);
         }
     }
 
-    shuffleChoices(choices) {
-        for (let i = choices.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [choices[i], choices[j]] = [choices[j], choices[i]];
-        }
-        return choices;
+    clearCache() {
+        this.cache.clear();
     }
-} 
+}
+
+export const dataLoader = new DataLoader(); 

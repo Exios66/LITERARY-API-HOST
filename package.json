@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "node scripts/generate-static-json.js",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d docs"
+    "generate": "node scripts/generate-static-json.js",
+    "predeploy": "npm run generate",
+    "deploy": "gh-pages -d docs",
+    "start": "node docs/api/v1/index.js"
   },
   "dependencies": {
-    "csv-parse": "^5.3.0"
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "gh-pages": "^5.0.0"
   }
-} 
+}

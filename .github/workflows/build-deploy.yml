@@ -1,0 +1,110 @@
+name: Build and Deploy
+on:
+  # Trigger on push to main branch
+  push:
+    branches: [ main ]
+  # Trigger on pull requests to main branch
+  pull_request:
+    branches: [ main ]
+  # Allow manual trigger from GitHub Actions tab
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+      debug_enabled:
+        description: 'Run with debug logging'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas requests
+    
+    - name: Debug Info
+      if: inputs.debug_enabled
+      run: |
+        echo "Python version:"
+        python --version
+        echo "Pip packages:"
+        pip list
+    
+    - name: Validate CSV files
+      run: python scripts/validate_csv.py
+    
+    - name: Run tests
+      run: |
+        python -m unittest discover tests
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    if: |
+      github.ref == 'refs/heads/main' ||
+      (github.event_name == 'workflow_dispatch' && inputs.environment == 'production')
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: Debug Info
+      if: inputs.debug_enabled
+      run: |
+        echo "Node version:"
+        node --version
+        echo "NPM version:"
+        npm --version
+        echo "Installed packages:"
+        npm list --depth=0
+
+    - name: Generate static files
+      run: npm run generate
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
+        publish_branch: gh-pages
+        force_orphan: true
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
+        commit_message: 'Deploy to GitHub Pages'
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: site-content
+        path: docs/
+        retention-days: 5
+
+    - name: Deployment Status
+      run: |
+        echo "Deployment completed to ${{ inputs.environment || 'production' }}"
+        echo "Triggered by ${{ github.event_name }}"

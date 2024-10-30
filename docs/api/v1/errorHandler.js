@@ -1,17 +1,21 @@
 export class APIError extends Error {
-    constructor(message, status = 500) {
+    constructor(message, statusCode = 500) {
         super(message);
-        this.status = status;
+        this.statusCode = statusCode;
+        this.name = 'APIError';
     }
 }
 
-export function handleError(error) {
-    const status = error instanceof APIError ? error.status : 500;
-    const message = error instanceof APIError ? error.message : 'Internal Server Error';
+export function handleError(error, res) {
+    console.error('API Error:', error);
     
-    return {
-        status: 'error',
-        message,
-        code: status
-    };
+    const statusCode = error.statusCode || 500;
+    const message = error.message || 'Internal Server Error';
+    
+    res.status(statusCode).json({
+        error: {
+            message,
+            status: statusCode
+        }
+    });
 } 

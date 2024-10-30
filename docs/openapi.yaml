@@ -1,100 +1,87 @@
 openapi: 3.1.0
 info:
-  title: Literary Vault API
-  description: API for retrieving questions from the Literary Vault Database.
+  title: Literary API Host - Quiz Questions
+  description: API for retrieving quiz questions in various subjects, including Astronomy, Literature, Mathematics, General Knowledge, Psychology, and American History. Each category returns a CSV file with the questions.
   version: 1.0.0
 servers:
-  - url: https://exios66.github.io/LITERARY-API-HOST
-    description: GitHub Pages Server
+  - url: https://exios66.github.io/LITERARY-API-HOST/docs/data
+    description: Main server hosting quiz question data files
 paths:
-  /api/v1/questions:
+  /Astronomy-questions.csv:
     get:
-      operationId: getQuestions
-      summary: Retrieve questions
-      description: Fetches a list of questions with optional parameters
-      parameters:
-        - name: category
-          in: query
-          required: true
-          description: The category of questions to retrieve
-          schema:
-            type: string
-            enum:
-              - astronomy
-              - literature
-              - mathematics
-              - general-knowledge
-              - psychology
-              - american-history
-        - name: limit
-          in: query
-          required: false
-          description: The number of questions to retrieve
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 50
-            default: 10
-        - name: difficulty
-          in: query
-          required: false
-          description: Difficulty level of questions (0-3)
-          schema:
-            type: integer
-            minimum: 0
-            maximum: 3
-        - name: random
-          in: query
-          required: false
-          description: Whether to return random questions
-          schema:
-            type: boolean
-            default: true
+      operationId: getAstronomyQuestions
+      summary: Retrieve Astronomy quiz questions
+      description: Returns a CSV file containing quiz questions on Astronomy.
       responses:
-        "200":
-          description: A list of questions
+        '200':
+          description: CSV file with Astronomy questions
           content:
-            application/json:
+            text/csv:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success, error]
-                  data:
-                    type: object
-                    properties:
-                      questions:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/Question"
-components:
-  schemas:
-    Question:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the question
-        question:
-          type: string
-          description: The question text
-        correct_answer:
-          type: string
-          description: The correct answer
-        incorrect_answers:
-          type: array
-          description: Array of incorrect answers
-          items:
-            type: string
-          minItems: 3
-          maxItems: 3
-        difficulty:
-          type: integer
-          description: Difficulty level (0-3)
-        category:
-          type: string
-          description: Question category
-        topic_focus:
-          type: string
-          description: Specific topic within the category 
+                type: string
+                format: binary
+  /Literature-questions.csv:
+    get:
+      operationId: getLiteratureQuestions
+      summary: Retrieve Literature quiz questions
+      description: Returns a CSV file containing quiz questions on Literature.
+      responses:
+        '200':
+          description: CSV file with Literature questions
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+  /Mathematics-questions.csv:
+    get:
+      operationId: getMathematicsQuestions
+      summary: Retrieve Mathematics quiz questions
+      description: Returns a CSV file containing quiz questions on Mathematics.
+      responses:
+        '200':
+          description: CSV file with Mathematics questions
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+  /General-Knowledge-questions.csv:
+    get:
+      operationId: getGeneralKnowledgeQuestions
+      summary: Retrieve General Knowledge quiz questions
+      description: Returns a CSV file containing quiz questions on General Knowledge.
+      responses:
+        '200':
+          description: CSV file with General Knowledge questions
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+  /Psychology-questions.csv:
+    get:
+      operationId: getPsychologyQuestions
+      summary: Retrieve Psychology quiz questions
+      description: Returns a CSV file containing quiz questions on Psychology.
+      responses:
+        '200':
+          description: CSV file with Psychology questions
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+  /American-History-questions.csv:
+    get:
+      operationId: getAmericanHistoryQuestions
+      summary: Retrieve American History quiz questions
+      description: Returns a CSV file containing quiz questions on American History.
+      responses:
+        '200':
+          description: CSV file with American History questions
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary

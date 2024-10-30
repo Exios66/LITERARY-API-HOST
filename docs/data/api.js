@@ -1,6 +1,6 @@
 // This file provides client-side routing for the static JSON files
 class LiteraryVaultAPI {
-    constructor(baseUrl = 'https://exios66.github.io/LITERARY-API-HOST/docs/data') {
+    constructor(baseUrl = 'https://raw.githubusercontent.com/Exios66/LITERARY-API-HOST/main/docs/data') {
         this.baseUrl = baseUrl;
     }
 
@@ -8,32 +8,38 @@ class LiteraryVaultAPI {
         const { limit = 10, random = true, difficulty = null } = options;
         
         try {
-            const response = await fetch(`${this.baseUrl}/${category}-questions.json`);
+            const response = await fetch(`${this.baseUrl}/${category}-questions.csv`);
             if (!response.ok) throw new Error('Category not found');
             
-            let { questions } = await response.json();
+            const csvText = await response.text();
+            const questions = this.parseCSV(csvText);
             
             // Apply filters
+            let filteredQuestions = questions;
             if (difficulty !== null) {
-                questions = questions.filter(q => q.difficulty === difficulty);
+                filteredQuestions = filteredQuestions.filter(q => parseInt(q.Difficulty) === difficulty);
             }
             
             // Randomize if requested
             if (random) {
-                questions = this.shuffleArray([...questions]);
+                filteredQuestions = this.shuffleArray([...filteredQuestions]);
             }
             
             // Apply limit
-            questions = questions.slice(0, limit);
+            filteredQuestions = filteredQuestions.slice(0, limit);
             
-            // Convert to OpenAI API format
-            const formattedQuestions = questions.map(q => ({
-                category: q.knowledge_category,
+            // Convert to OpenAI format
+            const formattedQuestions = filteredQuestions.map(q => ({
+                category: q['Knowledge Category'],
                 type: 'multiple',
-                difficulty: ['easy', 'medium', 'hard', 'expert'][q.difficulty],
-                question: q.question,
-                correct_answer: q.correct_answer,
-                incorrect_answers: [q.choice_1, q.choice_2, q.choice_3]
+                difficulty: ['easy', 'medium', 'hard', 'expert'][parseInt(q.Difficulty)],
+                question: q.Question,
+                correct_answer: q['Correct Answer'],
+                incorrect_answers: [
+                    q['Choice 1'],
+                    q['Choice 2'],
+                    q['Choice 3']
+                ]
             }));
             
             return {
@@ -42,6 +48,7 @@ class LiteraryVaultAPI {
             };
             
         } catch (error) {
+            console.error('Error fetching questions:', error);
             return {
                 response_code: 1,
                 results: []
@@ -49,17 +56,20 @@ class LiteraryVaultAPI {
         }
     }
 
-    async getCategories() {
-        try {
-            const response = await fetch(`${this.baseUrl}/categories.json`);
-            if (!response.ok) throw new Error('Categories not found');
-            return await response.json();
-        } catch (error) {
-            return {
-                status: 'error',
-                message: error.message
-            };
-        }
+    parseCSV(csvText) {
+        const lines = csvText.split('\n');
+        const headers = lines[0].split(',').map(h => h.trim());
+        
+        return lines.slice(1)
+            .filter(line => line.trim())
+            .map(line => {
+                const values = line.split(',').map(v => v.trim());
+                const question = {};
+                headers.forEach((header, index) => {
+                    question[header] = values[index];
+                });
+                return question;
+            });
     }
 
     shuffleArray(array) {

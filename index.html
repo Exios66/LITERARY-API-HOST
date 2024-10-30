@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Literary Vault - Question Categories</title>
+    <title>Literary Vault - API Documentation</title>
     <style>
         :root {
             /* Light theme - Vaporwave inspired */
@@ -212,10 +212,147 @@
             left: -1.2rem;
             color: var(--secondary-color);
         }
+
+        /* Add new header styles */
+        .header {
+            background-color: var(--code-bg);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .header-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .header-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .header-links svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .endpoint {
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .endpoint-header {
+            background-color: var(--code-bg);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .method {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: bold;
+        }
+
+        .path {
+            color: var(--text-color);
+            font-family: monospace;
+        }
+
+        .endpoint-content {
+            padding: 1rem;
+        }
+
+        .parameters table {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        /* Update theme toggle position for header */
+        .theme-toggle {
+            position: static;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .theme-toggle:hover {
+            color: var(--secondary-color);
+            transform: none;
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="header" role="banner">
+        <div class="header-content">
+            <h1>Questions API Documentation</h1>
+            <div class="header-links">
+                <a href="https://github.com/Exios66/Literary-Vault/tree/main" target="_blank" rel="noopener noreferrer" aria-label="Literary Vault Repository">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Repository
+                </a>
+                <a href="https://platform.openai.com/docs/guides/function-calling" target="_blank" rel="noopener noreferrer" aria-label="OpenAI Function Calling Documentation">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 3c-2.67 0-4.86 2.19-4.86 4.86h2.16c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7h2.16C16.86 7.19 14.67 5 12 5z"/>
+                    </svg>
+                    OpenAI Docs
+                </a>
+                <a href="https://app.gitbook.com/o/DfoU1sywMKH5TwuUhGYu/s/C6n7hphnd1S7jbWRLznx/" target="_blank" rel="noopener noreferrer" aria-label="GitBook Documentation">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1 17H7v-2h6v2zm4-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    GitBook
+                </a>
+                <a href="https://github.com/Exios66" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Profile
+                </a>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+                    <svg id="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 2a9.93 9.93 0 00-7.07 2.93A9.93 9.93 0 002 12a9.93 9.93 0 002.93 7.07A9.93 9.93 0 0012 22a9.93 9.93 0 007.07-2.93A9.93 9.93 0 0022 12a9.93 9.93 0 00-2.93-7.07A9.93 9.93 0 0012 2zm0 18a7.95 7.95 0 01-5.66-2.34A7.95 7.95 0 014 12a7.95 7.95 0 012.34-5.66A7.95 7.95 0 0112 4a7.95 7.95 0 015.66 2.34A7.95 7.95 0 0120 12a7.95 7.95 0 01-2.34 5.66A7.95 7.95 0 0112 20z"/>
+                    </svg>
+                    Theme
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="container" role="main">
         <h1>Literary Vault Question Repository</h1>
         <p>Access questions by category for API integration.</p>
 
@@ -552,65 +689,106 @@ const result = await router.handleRequest({
 
     <button class="theme-toggle" type="button" onclick="toggleTheme()">🌓</button>
 
-    <div class="toast" role="alert" aria-live="polite"></div>
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/Exios66/Literary-Vault/tree/main" target="_blank" rel="noopener noreferrer" aria-label="Literary Vault Repository">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Repository
+                </a>
+                <a href="https://platform.openai.com/docs/guides/function-calling" target="_blank" rel="noopener noreferrer" aria-label="OpenAI Function Calling Documentation">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 3c-2.67 0-4.86 2.19-4.86 4.86h2.16c0-1.49 1.21-2.7 2.7-2.7s2.7 1.21 2.7 2.7h2.16C16.86 7.19 14.67 5 12 5z"/>
+                    </svg>
+                    OpenAI Docs
+                </a>
+                <a href="https://app.gitbook.com/o/DfoU1sywMKH5TwuUhGYu/s/C6n7hphnd1S7jbWRLznx/" target="_blank" rel="noopener noreferrer" aria-label="GitBook Documentation">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1 17H7v-2h6v2zm4-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
+                    GitBook
+                </a>
+                <a href="https://github.com/Exios66" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub Profile
+                </a>
+            </div>
+        </div>
+    </footer>
 
-    <script src="docs/data/converter.js"></script>
-    <script src="docs/data/router.js"></script>
-    <script src="docs/data/api.js"></script>
+    <!-- JavaScript code for copyToClipboard, toast notification, and theme toggle -->
     <script>
-        // Theme toggle functionality
-        function toggleTheme() {
-            const html = document.documentElement;
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? '' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
-
-        // Set initial theme based on localStorage
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        }
-
         // Toast notification handling
-        const toastElement = document.querySelector('.toast');
-        let toastTimeout;
-
         const toast = {
+            element: document.querySelector('.toast'),
+            timeoutId: null,
             show(message, duration = 3000) {
-                toastElement.textContent = message;
-                toastElement.classList.add('show');
-
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => {
-                    toastElement.classList.remove('show');
+                this.element.textContent = message;
+                this.element.classList.add('show');
+                
+                clearTimeout(this.timeoutId);
+                this.timeoutId = setTimeout(() => {
+                    this.element.classList.remove('show');
                 }, duration);
             }
         };
 
         // Copy to clipboard functionality
         function copyToClipboard(button) {
-            const pre = button.parentElement;
-            const codeText = pre.textContent.replace('Copy', '').trim();
-            navigator.clipboard.writeText(codeText).then(() => {
-                toast.show('Copied to clipboard');
-            });
+            const schemaDiv = button.parentElement;
+            const codeContent = schemaDiv.textContent.trim();
+
+            navigator.clipboard.writeText(codeContent)
+                .then(() => toast.show('Copied to clipboard!'))
+                .catch(err => {
+                    console.error('Copy failed:', err);
+                    toast.show('Failed to copy text.');
+                });
         }
 
-        // Initialize the router
-        const router = new QuestionRouter();
-        
-        // Example usage
-        async function getQuestionsExample() {
-            const result = await router.handleRequest({
-                category: 'astronomy',
-                limit: 5,
-                random: true,
-                format: 'markdown'
-            });
-            console.log(result);
-        }
+        // Theme handling
+        const themeManager = {
+            html: document.documentElement,
+            themeIcon: document.getElementById('theme-icon'),
+            icons: {
+                light: '<path d="M12 2a9.93 9.93 0 00-7.07 2.93A9.93 9.93 0 002 12a9.93 9.93 0 002.93 7.07A9.93 9.93 0 0012 22a9.93 9.93 0 007.07-2.93A9.93 9.93 0 0022 12a9.93 9.93 0 00-2.93-7.07A9.93 9.93 0 0012 2zm0 18a7.95 7.95 0 01-5.66-2.34A7.95 7.95 0 014 12a7.95 7.95 0 012.34-5.66A7.95 7.95 0 0112 4a7.95 7.95 0 015.66 2.34A7.95 7.95 0 0120 12a7.95 7.95 0 01-2.34 5.66A7.95 7.95 0 0112 20z"/>',
+                dark: '<path d="M12 2a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 18a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zm10-8a1 1 0 01-1 1h-2a1 1 0 110-2h2a1 1 0 011 1zM4 13H2a1 1 0 110-2h2a1 1 0 110 2zm14.95 7.07a1 1 0 01-1.41 0l-1.42-1.42a1 1 0 011.42-1.42l1.41 1.41a1 1 0 010 1.43zM6.05 6.05a1 1 0 01-1.41 0L3.22 4.64a1 1 0 011.42-1.42l1.41 1.41a1 1 0 010 1.42zm12.9-1.41a1 1 0 010 1.41L17.53 7.47a1 1 0 01-1.42-1.42l1.41-1.41a1 1 0 011.43 0zM6.05 17.95a1 1 0 01-1.41 0L3.22 16.53a1 1 0 011.42-1.42l1.41 1.41a1 1 0 010 1.43zM12 6a6 6 0 000 12 6 6 0 000-12z"/>'
+            },
+            
+            toggle() {
+                const isDark = this.html.getAttribute('data-theme') === 'dark';
+                const newTheme = isDark ? 'light' : 'dark';
+                
+                if (isDark) {
+                    this.html.removeAttribute('data-theme');
+                    this.themeIcon.innerHTML = this.icons.light;
+                } else {
+                    this.html.setAttribute('data-theme', 'dark');
+                    this.themeIcon.innerHTML = this.icons.dark;
+                }
+                
+                localStorage.setItem('theme', newTheme);
+            },
+
+            init() {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    this.html.setAttribute('data-theme', 'dark');
+                    this.themeIcon.innerHTML = this.icons.dark;
+                }
+            }
+        };
+
+        // Initialize theme on page load
+        themeManager.init();
+
+        // Expose necessary functions to global scope
+        window.copyToClipboard = copyToClipboard;
+        window.toggleTheme = () => themeManager.toggle();
     </script>
 </body>
 </html>

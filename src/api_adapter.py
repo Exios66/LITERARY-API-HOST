@@ -3,7 +3,7 @@ import requests
 import tabulate
 
 class LiteraryVaultAdapter:
-    def __init__(self, base_url="https://exios66.github.io/LITERARY-API-HOST/docs/data"):
+    def __init__(self, base_url="https://raw.githubusercontent.com/Exios66/LITERARY-API-HOST/main/docs/data"):
         self.base_url = base_url
 
     def get_questions_markdown(self, category, limit=10, random=True):
@@ -22,13 +22,22 @@ class LiteraryVaultAdapter:
         Fetch questions and convert to pandas DataFrame
         """
         try:
-            # Fetch CSV directly from GitHub Pages
+            # Use raw GitHub content URL
             url = f"{self.base_url}/{category}-questions.csv"
-            df = pd.read_csv(url)
+            print(f"Fetching from URL: {url}")  # Debug print
+            
+            response = requests.get(url)
+            response.raise_for_status()  # Raise exception for bad status codes
+            
+            # Save content to temporary file (pandas read_csv works better with files)
+            with open('temp.csv', 'w', encoding='utf-8') as f:
+                f.write(response.text)
+            
+            df = pd.read_csv('temp.csv')
             
             # Apply filters
             if difficulty is not None:
-                df = df[df['difficulty'] == difficulty]
+                df = df[df['Difficulty'] == difficulty]
             
             # Randomize if requested
             if random:

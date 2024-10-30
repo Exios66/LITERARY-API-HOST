@@ -23,20 +23,27 @@ export class QuestionDataLoader {
                 skip_empty_lines: true
             });
 
-            // Transform to standard format
-            const questions = records.map(record => ({
-                id: record.ID,
-                question: record.Question,
-                correct_answer: record['Correct Answer'],
-                choices: [
+            // Transform to QuizEngine compatible format
+            const questions = records.map((record, index) => {
+                // Destructure the choices to match the DataFrame format
+                const [choice1, choice2, choice3] = this.shuffleChoices([
                     record['Choice 1'],
                     record['Choice 2'],
                     record['Choice 3']
-                ],
-                difficulty: parseInt(record.Difficulty),
-                knowledge_category: record['Knowledge Category'],
-                topic_focus: record['Topic Focus']
-            }));
+                ]);
+
+                return {
+                    id: record.ID || `${category}-${index + 1}`,
+                    question: record.Question,
+                    correct_answer: record['Correct Answer'],
+                    choice_1: choice1,
+                    choice_2: choice2,
+                    choice_3: choice3,
+                    difficulty: parseInt(record.Difficulty),
+                    knowledge_category: record['Knowledge Category'],
+                    topic_focus: record['Topic Focus']
+                };
+            });
 
             // Cache the results
             this.cache.set(category, questions);
@@ -46,5 +53,13 @@ export class QuestionDataLoader {
             console.error(`Error loading questions for ${category}:`, error);
             return [];
         }
+    }
+
+    shuffleChoices(choices) {
+        for (let i = choices.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [choices[i], choices[j]] = [choices[j], choices[i]];
+        }
+        return choices;
     }
 } 

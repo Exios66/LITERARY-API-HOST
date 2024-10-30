@@ -26,15 +26,25 @@ class LiteraryVaultAPI {
             // Apply limit
             questions = questions.slice(0, limit);
             
+            // Convert to OpenAI API format
+            const formattedQuestions = questions.map(q => ({
+                category: q.knowledge_category,
+                type: 'multiple',
+                difficulty: ['easy', 'medium', 'hard', 'expert'][q.difficulty],
+                question: q.question,
+                correct_answer: q.correct_answer,
+                incorrect_answers: [q.choice_1, q.choice_2, q.choice_3]
+            }));
+            
             return {
-                status: 'success',
-                data: { questions }
+                response_code: 0,
+                results: formattedQuestions
             };
             
         } catch (error) {
             return {
-                status: 'error',
-                message: error.message
+                response_code: 1,
+                results: []
             };
         }
     }

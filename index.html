@@ -424,12 +424,139 @@ curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/American-Hist
                 </ul>
             </li>
         </ul>
+
+        <h2>API Usage Examples</h2>
+        <p>Access questions programmatically using the following methods:</p>
+
+        <h3>1. Direct CSV Access</h3>
+        <pre>
+<button type="button" class="copy-button" onclick="copyToClipboard(this)">
+    <svg viewBox="0 0 24 24">
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+    </svg>
+    Copy
+</button>
+# Python Example
+import pandas as pd
+url = "https://exios66.github.io/LITERARY-API-HOST/docs/data/Astronomy-questions.csv"
+df = pd.read_csv(url)
+        </pre>
+
+        <h3>2. JavaScript API Client</h3>
+        <pre>
+<button type="button" class="copy-button" onclick="copyToClipboard(this)">
+    <svg viewBox="0 0 24 24">
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+    </svg>
+    Copy
+</button>
+const api = new LiteraryVaultAPI();
+const result = await api.getQuestions('astronomy', {
+    limit: 5,
+    random: true,
+    difficulty: 2
+});
+        </pre>
+
+        <h3>3. Markdown Format</h3>
+        <pre>
+<button type="button" class="copy-button" onclick="copyToClipboard(this)">
+    <svg viewBox="0 0 24 24">
+        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+    </svg>
+    Copy
+</button>
+const router = new QuestionRouter();
+const result = await router.handleRequest({
+    category: 'astronomy',
+    limit: 5,
+    random: true,
+    format: 'markdown'
+});
+        </pre>
+
+        <h2>API Documentation & Sitemap</h2>
+        <ul>
+            <li><a href="docs/api.md">API Reference Documentation</a></li>
+            <li><a href="docs/data/index.md">Question Categories Index</a></li>
+            <li>Question Categories:
+                <ul>
+                    <li><a href="docs/data/Astronomy-questions.csv">Astronomy Questions (CSV)</a></li>
+                    <li><a href="docs/data/Literature-questions.csv">Literature Questions (CSV)</a></li>
+                    <li><a href="docs/data/Mathematics-questions.csv">Mathematics Questions (CSV)</a></li>
+                    <li><a href="docs/data/General-Knowledge-questions.csv">General Knowledge Questions (CSV)</a></li>
+                    <li><a href="docs/data/Psychology-questions.csv">Psychology Questions (CSV)</a></li>
+                    <li><a href="docs/data/American-History-questions.csv">American History Questions (CSV)</a></li>
+                </ul>
+            </li>
+            <li>API Endpoints:
+                <ul>
+                    <li>Questions API: <code>/api/v1/questions?category={category}&limit={limit}&random={boolean}</code></li>
+                    <li>Categories API: <code>/api/v1/categories</code></li>
+                </ul>
+            </li>
+            <li>Data Formats:
+                <ul>
+                    <li>CSV Files: <code>/docs/data/{category}-questions.csv</code></li>
+                    <li>JSON Files: <code>/docs/data/{category}-questions.json</code></li>
+                    <li>Markdown Tables: <code>/docs/data/{category}-questions.md</code></li>
+                </ul>
+            </li>
+            <li>Client Libraries:
+                <ul>
+                    <li><code>LiteraryVaultAPI</code>: JavaScript client for JSON responses</li>
+                    <li><code>QuestionRouter</code>: JavaScript client for Markdown tables</li>
+                    <li><code>LiteraryVaultAdapter</code>: Python client with DataFrame support</li>
+                </ul>
+            </li>
+            <li>Documentation:
+                <ul>
+                    <li><a href="docs/openapi.yaml">OpenAPI Specification</a></li>
+                    <li><a href="docs/api.md">API Documentation</a></li>
+                    <li><a href="docs/data/index.md">Data Format Documentation</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h2>Integration Examples</h2>
+        <div id="example-output"></div>
+
+        <script>
+            // Add this to your existing scripts
+            async function showExample() {
+                const output = document.getElementById('example-output');
+                const router = new QuestionRouter();
+                
+                try {
+                    const result = await router.handleRequest({
+                        category: 'astronomy',
+                        limit: 3,
+                        random: true,
+                        format: 'markdown'
+                    });
+                    
+                    if (result.status === 'success') {
+                        output.innerHTML = `<pre>${result.data}</pre>`;
+                    } else {
+                        output.innerHTML = `<p>Error: ${result.message}</p>`;
+                    }
+                } catch (error) {
+                    output.innerHTML = `<p>Error: ${error.message}</p>`;
+                }
+            }
+
+            // Run example on page load
+            document.addEventListener('DOMContentLoaded', showExample);
+        </script>
     </div>
 
     <button class="theme-toggle" type="button" onclick="toggleTheme()">🌓</button>
 
     <div class="toast" role="alert" aria-live="polite"></div>
 
+    <script src="docs/data/converter.js"></script>
+    <script src="docs/data/router.js"></script>
+    <script src="docs/data/api.js"></script>
     <script>
         // Theme toggle functionality
         function toggleTheme() {
@@ -469,6 +596,20 @@ curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/American-Hist
             navigator.clipboard.writeText(codeText).then(() => {
                 toast.show('Copied to clipboard');
             });
+        }
+
+        // Initialize the router
+        const router = new QuestionRouter();
+        
+        // Example usage
+        async function getQuestionsExample() {
+            const result = await router.handleRequest({
+                category: 'astronomy',
+                limit: 5,
+                random: true,
+                format: 'markdown'
+            });
+            console.log(result);
         }
     </script>
 </body>

@@ -13,9 +13,6 @@ export function handleError(error, res) {
     const message = error.message || 'Internal Server Error';
     
     res.status(statusCode).json({
-        error: {
-            message,
-            status: statusCode
-        }
+        error: message
     });
 } 

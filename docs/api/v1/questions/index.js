@@ -25,29 +25,29 @@ router.get('/:category', async (req, res) => {
 
     if (!handler) {
         return res.status(404).json({
-            error: 'Category not found',
-            message: `Invalid category: ${category}`,
-            availableCategories: Object.keys(categoryHandlers)
+            error: `Category not found: ${category}. Available categories: ${Object.keys(categoryHandlers).join(', ')}`
         });
     }
 
+    res.setHeader('Content-Type', 'application/json');
+    
     try {
         await handler(req, res);
     } catch (error) {
         res.status(500).json({
-            error: 'Internal server error',
-            message: error.message
+            error: error.message || 'Internal server error'
         });
     }
 });
 
 // List all available categories
 router.get('/', (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
     res.json({
         categories: Object.keys(categoryHandlers),
         endpoints: Object.keys(categoryHandlers).map(category => ({
             category,
-            endpoint: `/api/v1/questions/${category}`,
+            url: `https://exios66.github.io/LITERARY-API-HOST/api/v1/questions/${category}`,
             method: 'GET'
         }))
     });

@@ -47,8 +47,20 @@ jobs:
         echo "Pip packages:"
         pip list
     
+    - name: Standardize CSV files
+      run: python scripts/standardize_csv.py
+    
     - name: Validate CSV files
       run: python scripts/validate_csv.py
+    
+    - name: Commit standardized files
+      if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add docs/data/*.csv
+        git diff --quiet && git diff --staged --quiet || git commit -m "Standardize CSV files"
+        git push
     
     - name: Run tests
       run: |

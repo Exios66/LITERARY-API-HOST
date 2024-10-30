@@ -138,6 +138,23 @@
             height: 14px;
             fill: currentColor;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+        }
     </style>
 </head>
 <body>
@@ -147,12 +164,12 @@
 
         <h2>Categories</h2>
         <ul>
-            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Astronomy_Questions.csv">Astronomy</a></li>
-            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Literature_Questions.csv">Literature</a></li>
-            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Mathematics_Questions.csv">Mathematics</a></li>
-            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_General_Knowledge_Questions.csv">General Knowledge</a></li>
-            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Psychology_Questions.csv">Psychology</a></li>
-            <li><a href="https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_American_History_Questions.csv">American History</a></li>
+            <li><a href="https://exios66.github.io/LITERARY-API-HOST/docs/data/Refined_Astronomy_Questions.csv">Astronomy</a></li>
+            <li><a href="https://exios66.github.io/LITERARY-API-HOST/docs/data/Refined_Literature_Questions.csv">Literature</a></li>
+            <li><a href="https://exios66.github.io/LITERARY-API-HOST/docs/data/Refined_Mathematics_Questions.csv">Mathematics</a></li>
+            <li><a href="https://exios66.github.io/LITERARY-API-HOST/docs/data/Refined_General_Knowledge_Questions.csv">General Knowledge</a></li>
+            <li><a href="https://exios66.github.io/LITERARY-API-HOST/docs/data/Refined_Psychology_Questions.csv">Psychology</a></li>
+            <li><a href="https://exios66.github.io/LITERARY-API-HOST/docs/data/Refined_American_History_Questions.csv">American History</a></li>
         </ul>
 
         <h2>API Access</h2>
@@ -164,13 +181,79 @@
     </svg>
     Copy
 </button>
-curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Astronomy_Questions.csv" -o "Astronomy_Questions.csv"
-curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Literature_Questions.csv" -o "Literature_Questions.csv"
-curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Mathematics_Questions.csv" -o "Mathematics_Questions.csv"
-curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_General_Knowledge_Questions.csv" -o "General_Knowledge_Questions.csv"
-curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_Psychology_Questions.csv" -o "Psychology_Questions.csv"
-curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/Questions/CSV/Refined_American_History_Questions.csv" -o "American_History_Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Astronomy_questions.md" -o "Astronomy_Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Literature_questions.md" -o "Literature_Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Refined_Mathematics_questions.md" -o "Mathematics_Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/General-Knowledge-questions.md" -o "General_Knowledge_Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/Psychology-questions.md" -o "Psychology_Questions.csv"
+curl -X GET "https://exios66.github.io/LITERARY-API-HOST/docs/data/American-History-questions.md" -o "American_History_Questions.csv"
         </pre>
+
+        <h2>Sample Questions</h2>
+        <p>Below is a sample set of questions formatted in a tabular markdown:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Question</th>
+                    <th>Correct Answer</th>
+                    <th>Choice 1</th>
+                    <th>Choice 2</th>
+                    <th>Choice 3</th>
+                    <th>Difficulty</th>
+                    <th>Knowledge Category</th>
+                    <th>Topic Focus</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>521</td>
+                    <td>Who wrote 'Hamlet'?</td>
+                    <td>William Shakespeare</td>
+                    <td>Jane Austen</td>
+                    <td>Charles Dickens</td>
+                    <td>George Orwell</td>
+                    <td>0</td>
+                    <td>Literature</td>
+                    <td>Authors &amp; Literature</td>
+                </tr>
+                <tr>
+                    <td>522</td>
+                    <td>Who is the author of 'Pride and Prejudice'?</td>
+                    <td>Jane Austen</td>
+                    <td>Emily Bronte</td>
+                    <td>Mary Shelley</td>
+                    <td>Virginia Woolf</td>
+                    <td>1</td>
+                    <td>Literature</td>
+                    <td>Authors &amp; Literature</td>
+                </tr>
+                <tr>
+                    <td>523</td>
+                    <td>Who wrote 'The Great Gatsby'?</td>
+                    <td>F. Scott Fitzgerald</td>
+                    <td>Ernest Hemingway</td>
+                    <td>John Steinbeck</td>
+                    <td>Mark Twain</td>
+                    <td>2</td>
+                    <td>Literature</td>
+                    <td>Authors &amp; Literature</td>
+                </tr>
+                <tr>
+                    <td>524</td>
+                    <td>Who authored 'One Hundred Years of Solitude'?</td>
+                    <td>Gabriel Garcia Marquez</td>
+                    <td>Isabel Allende</td>
+                    <td>Mario Vargas Llosa</td>
+                    <td>Julio Cortazar</td>
+                    <td>3</td>
+                    <td>Literature</td>
+                    <td>Authors &amp; Literature</td>
+                </tr>
+                <!-- Add additional questions as needed -->
+            </tbody>
+        </table>
 
         <h2>Action JSON Framework</h2>
         <pre>
@@ -229,6 +312,18 @@ curl -X GET "https://raw.githubusercontent.com/Exios66/Literary-Vault/main/docs/
         "correct_answer": {
           "type": "string",
           "description": "The correct answer to the question"
+        },
+        "difficulty": {
+          "type": "integer",
+          "description": "Difficulty level of the question"
+        },
+        "knowledge_category": {
+          "type": "string",
+          "description": "The main category of knowledge"
+        },
+        "topic_focus": {
+          "type": "string",
+          "description": "Specific topic focus within the category"
         }
       },
       "required": ["id", "question", "correct_answer"]

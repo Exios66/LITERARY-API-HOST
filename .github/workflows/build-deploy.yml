@@ -47,6 +47,9 @@ jobs:
         echo "Pip packages:"
         pip list
     
+    - name: Fix CSV files
+      run: python scripts/fix_csv_files.py
+    
     - name: Standardize CSV files
       run: python scripts/standardize_csv.py
     

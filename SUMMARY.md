@@ -1,7 +1,8 @@
 # Table of contents
 
 * [Custom Assessment GPTs](README.md)
-* [Welcome](<README (1).md>)
+* [Welcome](readme/README.md)
+  * [Ai Research Docs](https://github.com/Exios66/ai-research-docs)
 
 ## Getting Started
 
